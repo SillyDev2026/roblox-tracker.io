@@ -10,8 +10,8 @@
   "players": 153025,
   "friends": 0,
   "hops": 0,
-  "state": "LOADING",
-  "elapsed": "1m 29s",
+  "state": "IN_GAME",
+  "elapsed": "1m 34s",
   "antiCheatStatus": "System Secure",
   "detectedCheats": "None"
 }
