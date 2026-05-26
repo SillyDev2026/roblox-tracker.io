@@ -7,63 +7,67 @@
 </head>
 <body>
 
-<h1>Roblox Tracker</h1>
+<h1>Roblox Tracker — Multi‑Instance Monitor</h1>
 
-<div class="grid">
-
-  <div class="card">
-    <h2>Game</h2>
-    <p><strong>Name:</strong> <span id="game-name"></span></p>
-    <p><strong>Place ID:</strong> <span id="place-id"></span></p>
-    <p><strong>Job ID:</strong> <span id="job-id"></span></p>
-    <p><strong>Genre:</strong> <span id="genre"></span></p>
-    <p><strong>Server:</strong> <span id="server-type"></span></p>
-  </div>
-
-  <div class="card">
-    <h2>Session</h2>
-    <p><strong>Status:</strong> <span id="state"></span></p>
-    <p><strong>Players:</strong> <span id="players"></span></p>
-    <p><strong>Friends:</strong> <span id="friends"></span></p>
-    <p><strong>Hops:</strong> <span id="hops"></span></p>
-    <p><strong>Elapsed:</strong> <span id="elapsed"></span></p>
-  </div>
-
-  <div class="card">
-    <h2>Anti‑Cheat</h2>
-    <p><strong>Status:</strong> <span id="ac-status"></span></p>
-    <p><strong>Detected:</strong> <span id="cheats"></span></p>
-  </div>
-
-</div>
+<div id="cards" class="grid"></div>
 
 <script>
-async function refresh() {
+async function loadAllStates() {
   try {
-    const res = await fetch("data/state.json?cache=" + Date.now());
-    const data = await res.json();
+    const res = await fetch("data/");
+    const text = await res.text();
 
-    document.getElementById("game-name").textContent = data.game.name;
-    document.getElementById("place-id").textContent = data.placeId ?? "N/A";
-    document.getElementById("job-id").textContent = data.jobId ?? "N/A";
-    document.getElementById("genre").textContent = data.genre;
-    document.getElementById("server-type").textContent = data.serverType;
+    const files = [...text.matchAll(/href="(instance-[^"]+\.json)"/g)]
+      .map(m => m[1]);
 
-    document.getElementById("state").textContent = data.state;
-    document.getElementById("players").textContent = data.players;
-    document.getElementById("friends").textContent = data.friends;
-    document.getElementById("hops").textContent = data.hops;
-    document.getElementById("elapsed").textContent = data.elapsed;
+    const states = [];
 
-    document.getElementById("ac-status").textContent = data.antiCheatStatus;
-    document.getElementById("cheats").textContent = data.detectedCheats || "None";
+    for (const file of files) {
+      try {
+        const r = await fetch("data/" + file + "?cache=" + Date.now());
+        const json = await r.json();
+        states.push({ id: file, data: json });
+      } catch {}
+    }
+
+    renderCards(states);
   } catch (e) {
-    console.error("Failed to load state.json", e);
+    console.error("Failed to load states", e);
   }
 }
 
-setInterval(refresh, 1000);
-refresh();
+function renderCards(states) {
+  const container = document.getElementById("cards");
+  container.innerHTML = "";
+
+  states.forEach(({ id, data }) => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <h2>${data.game.name}</h2>
+      <p><strong>Instance:</strong> ${id}</p>
+      <p><strong>Place ID:</strong> ${data.placeId ?? "N/A"}</p>
+      <p><strong>Job ID:</strong> ${data.jobId ?? "N/A"}</p>
+      <p><strong>Genre:</strong> ${data.genre}</p>
+      <p><strong>Server:</strong> ${data.serverType}</p>
+      <hr>
+      <p><strong>Status:</strong> ${data.state}</p>
+      <p><strong>Players:</strong> ${data.players}</p>
+      <p><strong>Friends:</strong> ${data.friends}</p>
+      <p><strong>Hops:</strong> ${data.hops}</p>
+      <p><strong>Elapsed:</strong> ${data.elapsed}</p>
+      <hr>
+      <p><strong>Anti‑Cheat:</strong> ${data.antiCheatStatus}</p>
+      <p><strong>Detected:</strong> ${data.detectedCheats}</p>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+setInterval(loadAllStates, 1000);
+loadAllStates();
 </script>
 
 </body>
