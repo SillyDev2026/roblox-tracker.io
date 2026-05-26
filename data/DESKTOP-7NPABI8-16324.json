@@ -1,17 +1,17 @@
 {
   "game": {
-    "name": "7ab5e212-410a-4c8a-a5de-d1792497e706",
-    "icon": "roblox"
+    "name": "Slime RNG",
+    "icon": "https://tr.rbxcdn.com/180DAY-2f7978b674aeb4273e19ba6fa25bb846/512/512/Image/Png/noFilter"
   },
   "placeId": "92416421522960",
   "jobId": null,
-  "genre": "Unknown",
+  "genre": "All",
   "serverType": "Public Server",
-  "players": 0,
+  "players": 153025,
   "friends": 0,
   "hops": 0,
   "state": "LOADING",
-  "elapsed": "1m 28s",
+  "elapsed": "1m 29s",
   "antiCheatStatus": "System Secure",
   "detectedCheats": "None"
 }
