@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Roblox Tracker Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Roblox Tracker</h1>
+
+<div class="grid">
+
+  <div class="card">
+    <h2>Game</h2>
+    <p><strong>Name:</strong> <span id="game-name"></span></p>
+    <p><strong>Place ID:</strong> <span id="place-id"></span></p>
+    <p><strong>Job ID:</strong> <span id="job-id"></span></p>
+    <p><strong>Genre:</strong> <span id="genre"></span></p>
+    <p><strong>Server:</strong> <span id="server-type"></span></p>
+  </div>
+
+  <div class="card">
+    <h2>Session</h2>
+    <p><strong>Status:</strong> <span id="state"></span></p>
+    <p><strong>Players:</strong> <span id="players"></span></p>
+    <p><strong>Friends:</strong> <span id="friends"></span></p>
+    <p><strong>Hops:</strong> <span id="hops"></span></p>
+    <p><strong>Elapsed:</strong> <span id="elapsed"></span></p>
+  </div>
+
+  <div class="card">
+    <h2>Anti‑Cheat</h2>
+    <p><strong>Status:</strong> <span id="ac-status"></span></p>
+    <p><strong>Detected:</strong> <span id="cheats"></span></p>
+  </div>
+
+</div>
+
+<script>
+async function refresh() {
+  try {
+    const res = await fetch("data/state.json?cache=" + Date.now());
+    const data = await res.json();
+
+    document.getElementById("game-name").textContent = data.game.name;
+    document.getElementById("place-id").textContent = data.placeId ?? "N/A";
+    document.getElementById("job-id").textContent = data.jobId ?? "N/A";
+    document.getElementById("genre").textContent = data.genre;
+    document.getElementById("server-type").textContent = data.serverType;
+
+    document.getElementById("state").textContent = data.state;
+    document.getElementById("players").textContent = data.players;
+    document.getElementById("friends").textContent = data.friends;
+    document.getElementById("hops").textContent = data.hops;
+    document.getElementById("elapsed").textContent = data.elapsed;
+
+    document.getElementById("ac-status").textContent = data.antiCheatStatus;
+    document.getElementById("cheats").textContent = data.detectedCheats || "None";
+  } catch (e) {
+    console.error("Failed to load state.json", e);
+  }
+}
+
+setInterval(refresh, 1000);
+refresh();
+</script>
+
+</body>
+</html>
