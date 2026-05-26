@@ -10,8 +10,8 @@
   "players": 0,
   "friends": 0,
   "hops": 0,
-  "state": "IDLE",
-  "elapsed": "494396h 16m 30s",
+  "state": "MENU",
+  "elapsed": "0s",
   "antiCheatStatus": "System Secure",
   "detectedCheats": "None"
 }
