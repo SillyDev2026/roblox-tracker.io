@@ -1,17 +1,17 @@
 {
   "game": {
-    "name": "Roblox",
+    "name": "7ab5e212-410a-4c8a-a5de-d1792497e706",
     "icon": "roblox"
   },
-  "placeId": null,
+  "placeId": "92416421522960",
   "jobId": null,
   "genre": "Unknown",
   "serverType": "Public Server",
   "players": 0,
   "friends": 0,
   "hops": 0,
-  "state": "MENU",
-  "elapsed": "1m 27s",
+  "state": "LOADING",
+  "elapsed": "1m 28s",
   "antiCheatStatus": "System Secure",
   "detectedCheats": "None"
 }
