@@ -1,0 +1,14 @@
+{
+  "game": { "name": "Waiting...", "icon": "" },
+  "placeId": null,
+  "jobId": null,
+  "genre": "Unknown",
+  "serverType": "Unknown",
+  "players": 0,
+  "friends": 0,
+  "hops": 0,
+  "elapsed": "0s",
+  "state": "IDLE",
+  "antiCheatStatus": "System Secure",
+  "detectedCheats": "None"
+}
